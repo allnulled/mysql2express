@@ -26,12 +26,12 @@ mysql2express
 
 ```
 require("mysql2express")({
-	user:      "my_user",
-	password:  "my_password",
-	database:  "my_database",
-	host:      "localhost",
-	port:      3306,
-	output:    process.cwd() + "/my_directory"
+    user:      "my_user",
+    password:  "my_password",
+    database:  "my_database",
+    host:      "localhost",
+    port:      3306,
+    output:    process.cwd() + "/my_directory"
 }).then(() => ...).catch(error => ...);
 ```
 
@@ -77,18 +77,18 @@ console.log(userSchema);
 
 ```js
 user.getAll({
-	where:      [["id", "<", 10],["id", ">", 0]],
-	order:      [["id", "desc"],["name", "desc"]],
-	fields:     ["id", "name"],
-	page:       0,
-	quantity:   2,
-	search:     "Text that must appear in any (selectable) field"
+    where:      [["id", "<", 10],["id", ">", 0]],
+    order:      [["id", "desc"],["name", "desc"]],
+    fields:     ["id", "name"],
+    page:       0,
+    quantity:   2,
+    search:     "Text that must appear in any (selectable) field"
 }).then(output => {
-	const { data, totalOfItems } = output;
-	console.log("Data:", data);
-	console.log("Total of items to paginate:", totalOfItems);
+    const { data, totalOfItems } = output;
+    console.log("Data:", data);
+    console.log("Total of items to paginate:", totalOfItems);
 }).catch(error => {
-	console.log("There were errors:", error);
+    console.log("There were errors:", error);
 });
 ```
 
@@ -96,8 +96,8 @@ user.getAll({
 
 ```js
 user.getOne(10/*, ["id", "name"]*/).then(output => {
-	const { data } = output;
-	console.log("Item (or null):", item);
+    const { data } = output;
+    console.log("Item (or null):", item);
 }).catch(handler);
 ```
 
@@ -105,8 +105,8 @@ user.getOne(10/*, ["id", "name"]*/).then(output => {
 
 ```js
 user.postOne({ name: "username" }/*, ["name"]*/).then(output => {
-	const { id } = output;
-	console.log("New item with id:", id);
+    const { id } = output;
+    console.log("New item with id:", id);
 }).catch(handler);
 ```
 
@@ -114,8 +114,8 @@ user.postOne({ name: "username" }/*, ["name"]*/).then(output => {
 
 ```js
 user.putOne(11, { name: "custom username" }/*, ["name"]*/).then(output => {
-	const { changedItems } = output;
-	console.log("Items changed:", changedItems);
+    const { changedItems } = output;
+    console.log("Items changed:", changedItems);
 }).catch(handler);
 ```
 
@@ -123,8 +123,8 @@ user.putOne(11, { name: "custom username" }/*, ["name"]*/).then(output => {
 
 ```js
 user.deleteOne(11).then(output => {
-	const { deletedItems } = output;
-	console.log("Items deleted:", deletedItems);
+    const { deletedItems } = output;
+    console.log("Items deleted:", deletedItems);
 }).catch(handler);
 ```
 
