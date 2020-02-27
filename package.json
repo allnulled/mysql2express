@@ -4,7 +4,7 @@
   "description": "Generate REST models and controllers automativally for Express web applications from a MySQL database.",
   "main": "src/index.js",
   "bin": {
-    "m2e": "./bin/m2e"
+    "mysql2express": "./bin/mysql2express"
   },
   "directories": {
     "test": "test"
