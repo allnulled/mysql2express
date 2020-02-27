@@ -5,7 +5,7 @@ const exec = require("execute-command-sync");
 const {
     expect
 } = require("chai");
-const m2e = require(__dirname + "/../src/index.js");
+const mysql2express = require(__dirname + "/../src/index.js");
 const credentials = config.credentials;
 const options = config.options;
 
@@ -18,7 +18,7 @@ describe("mysql2express(...)", function() {
 
     it("can generate a REST API from mysql2express API", function(done) {
         this.timeout(10 * 1000);
-        m2e(credentials, options, {
+        mysql2express(credentials, options, {
                 "user": {
                     "id": {
                         "description": "This is an extra, injected information field."
@@ -43,7 +43,7 @@ describe("mysql2express(...)", function() {
         const credentialsCommand = Object.keys(credentials).map(prop => {
         	return "--" + prop + " \"" + credentials[prop] + "\"";
         }).join(" ");
-        const command = "./bin/m2e " + credentialsCommand + " --output \"./test/rest-2\"";
+        const command = "./bin/mysql2express " + credentialsCommand + " --output \"./test/rest-2\"";
         console.log("[cmd] " + command);
         exec(command, {
         	cwd: __dirname + "/.."

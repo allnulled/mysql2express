@@ -12,7 +12,7 @@
   "scripts": {
     "docs": "javadoc -i src/**/*.js -o docs/README.API.md -f markdown",
     "test": "mocha --sort test/*.test.js",
-    "cover": "nyc --reporter=html mocha --sort test/*.test.js",
+    "cover": "nyc --x \"./test/rest-1/**\" --reporter=html mocha --sort test/*.test.js",
     "clean": "rimraf ./coverage ./.nyc_output && rimraf ./test/rest-1 && rimraf test/rest-2"
   },
   "repository": {
