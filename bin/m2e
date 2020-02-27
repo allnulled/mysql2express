@@ -1,0 +1,63 @@
+#!/usr/bin/env node
+
+const path = require("path");
+const yargs = require("yargs");
+const args = yargs
+	.version(require(__dirname + "/../package.json").version)
+	.option("user", {
+		type: "",
+		alias: "u",
+		default: "test",
+		describe: "",
+		help: "help"
+	})
+	.option("password", {
+		type: "",
+		alias: "p",
+		default: "test",
+		describe: "",
+		help: "help"
+	})
+	.option("database", {
+		type: "",
+		alias: "d",
+		default: "test",
+		describe: "",
+		help: "help"
+	})
+	.option("host", {
+		type: "",
+		alias: "h",
+		default: "localhost",
+		describe: "",
+		help: "help"
+	})
+	.option("port", {
+		type: "",
+		alias: "r",
+		default: 3306,
+		describe: "",
+		help: "help"
+	})
+	.option("output", {
+		type: "",
+		alias: "o",
+		default:  path.resolve(process.cwd(), "m2e-output"),
+		describe: "",
+		help: "help"
+	})
+	.argv;
+
+
+const {host, port, user, password, database, output} = args;
+const m2e = require(__dirname + "/../src/index.js");
+const credentials = {host, port, user, password, database};
+const options = {outputPath: path.resolve(output)};
+
+m2e(credentials, options)
+	.then(data => {
+		// @NOTHING
+	})
+	.catch(error => {
+		console.log("[cmd.m2e] ERROR ARISED!", error);
+	});
