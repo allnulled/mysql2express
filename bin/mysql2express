@@ -5,59 +5,59 @@ const yargs = require("yargs");
 const args = yargs
 	.version(require(__dirname + "/../package.json").version)
 	.option("user", {
-		type: "",
+		type: "string",
 		alias: "u",
 		default: "test",
-		describe: "",
+		describe: "User of the MySQL DB.",
 		help: "help"
 	})
 	.option("password", {
-		type: "",
+		type: "string",
 		alias: "p",
 		default: "test",
-		describe: "",
+		describe: "Password of the user.",
 		help: "help"
 	})
 	.option("database", {
-		type: "",
+		type: "string",
 		alias: "d",
 		default: "test",
-		describe: "",
+		describe: "Name of the MySQL DB.",
 		help: "help"
 	})
 	.option("host", {
-		type: "",
+		type: "string",
 		alias: "h",
 		default: "localhost",
-		describe: "",
+		describe: "IP of the MySQL DB.",
 		help: "help"
 	})
 	.option("port", {
-		type: "",
+		type: "number",
 		alias: "r",
 		default: 3306,
-		describe: "",
+		describe: "Port of the MySQL DB.",
 		help: "help"
 	})
 	.option("output", {
-		type: "",
+		type: "string",
 		alias: "o",
-		default:  path.resolve(process.cwd(), "m2e-output"),
-		describe: "",
+		default:  path.resolve(process.cwd(), "mysql2express-output"),
+		describe: "Directory to dump sources to.",
 		help: "help"
 	})
 	.argv;
 
 
 const {host, port, user, password, database, output} = args;
-const m2e = require(__dirname + "/../src/index.js");
+const mysql2express = require(__dirname + "/../src/index.js");
 const credentials = {host, port, user, password, database};
 const options = {outputPath: path.resolve(output)};
 
-m2e(credentials, options)
+mysql2express(credentials, options)
 	.then(data => {
 		// @NOTHING
 	})
 	.catch(error => {
-		console.log("[cmd.m2e] ERROR ARISED!", error);
+		console.log("[cmd.mysql2express] ERROR ARISED!", error);
 	});
