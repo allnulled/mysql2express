@@ -30,7 +30,13 @@ class Model {
     }
 
     static get DEFAULT_OPTIONS() {
-        return {};
+        return {
+            identifierField: "id",
+            unselectableFields: ["password", "created_at", "updated_at", "deleted_at"],
+            unsettableFields: ["id", "created_at", "updated_at", "deleted_at"],
+            debugSQL: false,
+            store: require(__dirname + "/../stores/Store.js")
+        };
     }
 
     static getConnection(...args) {
@@ -44,14 +50,6 @@ class Model {
     constructor(options = {}) {
         Object.assign(this, this.constructor.DEFAULT_OPTIONS, options);
     }
-
-    identifierField = "id";
-
-    unselectableFields = ["password", "created_at", "updated_at", "deleted_at"];
-
-    unsettableFields = ["id", "created_at", "updated_at", "deleted_at"];
-
-    debugSQL = false;
 
     schema() {
         return {

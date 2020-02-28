@@ -147,7 +147,26 @@ const express = require("express");
 const app = express();
 const UserController = require("./my_directory/controllers/UserController.js");
 
-app.use("/api/v1/user", UserController.create({...}).serve());
+UserController.create({...}).mountOn({ app, route: "/api/v1/user" });
+```
+
+#### How to use a whole REST API
+
+This is an example of how one can use a whole REST API in an `express` application:
+
+```js
+const express = require("express");
+const app = express();
+const AllControllers = require("./my_directory/AllControllers.js");
+
+AllControllers.forEach(Controller => {
+	Controller
+		.create({...})
+		.mountOn({
+			app,
+			route: "/api/v1/" + Controller.REFERENCED_MODEL.MODEL_INFO.table
+		});
+});
 ```
 
 ### Customization
