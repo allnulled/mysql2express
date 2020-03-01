@@ -22,7 +22,7 @@ module.exports = async function QuerySortRender(credentials, options = DEFAULT_O
 		}
 		const results = await Querier(credentials, options);
 		const data = await Sorter(results, credentials, options, extensions);
-		const output = await Renderer(data, credentials, options);
+		const output = await Renderer(data, credentials, options, extensions);
 		const files = await Dumper(output, data, credentials, options);
 		return files;
 	} catch(error) {

@@ -1,24 +1,25 @@
 # TODO.md
 
-[ ] templates/Store.ejs
+[x] templates/Store.ejs
   [x] Añadírselo a Model.js como opción configurable por instancia.
-  [ ] Añadir métodos:
-    [ ] store.getPath
-    [ ] store.describe
-    [ ] store.has
-    [ ] store.hasFile
-    [ ] store.read
-    [ ] store.write
-    [ ] store.delete
-    [ ] store.hasFolder
-    [ ] store.readFolder
-    [ ] store.createFolder
-    [ ] store.deleteFolder
-    [ ] store.readStream
-    [ ] store.writeStream
+  [x] Añadir métodos:
+    [x] store.getPath
+    [x] store.describe
+    [x] store.has
+    [x] store.hasFile
+    [x] store.read
+    [x] store.write
+    [x] store.delete
+    [x] store.hasFolder
+    [x] store.readFolder
+    [x] store.createFolder
+    [x] store.deleteFolder
+    [x] store.readStream
+    [x] store.writeStream
 
 
 [ ] templates/Model.ejs:
+  [ ] Adjuntar parametrizable "store" con una instancia del Store por defecto.
   [ ] Separar "onReturnData" del ciclo de todos los CRUD.
   [ ] Añadir ciclo "onFileSynchronization" en métodos:
     [ ] postOne
@@ -34,4 +35,3 @@
     [ ] contenidos en binario
     [ ] contenidos en streams
     [ ] contenidos en ruta a fichero
-  [ ] 

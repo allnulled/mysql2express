@@ -194,14 +194,59 @@ module.exports = async function DefaultSort(results, credentials, options, exten
 		Object.assign(schema[modelName][columnName], typeInfo);
 		schema[modelName][columnName] = createColumnObjectSorted(schema[modelName][columnName]);
 		
-		if(row.$table in extensions) {
-			if(columnName in extensions[row.$table]) {
-				Object.assign(schema[modelName][columnName], extensions[row.$table][columnName]);
+		if((typeof(extensions.perColumn) === "object") && row.$table in extensions.perColumn) {
+			if(columnName in extensions.perColumn[row.$table]) {
+				Object.assign(schema[modelName][columnName], extensions.perColumn[row.$table][columnName]);
 			}
 		}
 	}
 	Object.keys(schema).forEach(modelName => {
 		schema[modelName] = createTableObjectSorted(schema[modelName]);
 	});
-	return schema;
+
+	const models = Object.keys(schema).reduce((models, modelName) => {
+		const modelAttributes = schema[modelName];
+		const model = (() => {
+			const attributes = Object.keys(modelAttributes);
+			const column = modelAttributes[attributes[0]];
+			const database = column.database;
+			const table = column.table;
+			const primaryKeys = (() => {
+				const pks = [];
+				attributes.forEach(attributeName => {
+					const attribute = modelAttributes[attributeName];
+					if(attribute.isPrimaryKey) {
+						pks.push(attributeName);
+					}
+				});
+				return pks;
+			})();
+			const foreignKeys = (() => {
+				const fks = [];
+				attributes.forEach(attributeName => {
+					const attribute = modelAttributes[attributeName];
+					if(attribute.isForeignKey) {
+						attribute.referencesTo.forEach(referencesTo => {
+							const { table, column, id } = referencesTo;
+							fks.push({
+								constraint: id,
+								column: attributeName,
+								referencedTable: table,
+								referencedColumn: column
+							});
+						});
+					}
+				});
+				return fks;
+			})();
+			let additionals = {};
+			if((typeof(extensions.perModel) === "object") && modelName in extensions.perModel) {
+				additionals = extensions.perModel[modelName];
+			}
+			return { database, model: modelName, table, attributes, primaryKeys, foreignKeys, ...additionals };
+		})();
+		models[modelName] = model;
+		return models;
+	}, {});
+	return { schema, models };
 };

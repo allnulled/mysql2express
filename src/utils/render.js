@@ -13,7 +13,7 @@ const srcTableModel = fs.readFileSync(tableModelFile).toString();
 const srcTableController = fs.readFileSync(tableControllerFile).toString();
 const srcParentStore = fs.readFileSync(storeFile).toString();
 
-module.exports = async function DefaultRender(data, credentials, options) {
+module.exports = async function DefaultRender(data, credentials, options, extensions) {
 	const ejsParameters = {
 		require,
 		process,
@@ -26,51 +26,17 @@ module.exports = async function DefaultRender(data, credentials, options) {
 		"controllers/Controller.js": ejs.render(srcParentController, ejsParameters),
 		"stores/Store.js": ejs.render(srcParentStore, ejsParameters),
 	};
-	Object.keys(data).forEach(Model => {
-		const modelAttributes = data[Model];
-		const modelInfo = (() => {
-			const attributes = Object.keys(modelAttributes);
-			const column = modelAttributes[attributes[0]];
-			const database = column.database;
-			const table = column.table;
-			const primaryKeys = (() => {
-				const pks = [];
-				attributes.forEach(attributeName => {
-					const attribute = modelAttributes[attributeName];
-					if(attribute.isPrimaryKey) {
-						pks.push(attributeName);
-					}
-				});
-				return pks;
-			})();
-			const foreignKeys = (() => {
-				const fks = [];
-				attributes.forEach(attributeName => {
-					const attribute = modelAttributes[attributeName];
-					if(attribute.isForeignKey) {
-						attribute.referencesTo.forEach(referencesTo => {
-							const { table, column, id } = referencesTo;
-							fks.push({
-								constraint: id,
-								column: attributeName,
-								referencedTable: table,
-								referencedColumn: column
-							});
-						});
-					}
-				});
-				return fks;
-			})();
-			return { database, model: Model, table, attributes, primaryKeys, foreignKeys };
-		})();
+	Object.keys(data.schema).forEach(Model => {
+		const modelAttributes = data.schema[Model];
 		const parameters = {
 			Model,
-			modelInfo,
+			modelInfo: data.models[Model],
 			modelAttributes,
 			...ejsParameters
 		};
 		const srcModel = ejs.render(srcTableModel, parameters);
 		const srcController = ejs.render(srcTableController, parameters);
+
 		output[`models/${Model}Model.js`] = srcModel;
 		output[`controllers/${Model}Controller.js`] = srcController;
 	});
