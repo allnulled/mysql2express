@@ -1,0 +1,29 @@
+{
+	"name": "my-very-own-rest-service",
+	"version": "1.0.0",
+	"description": "Custom REST API",
+	"main": "api.js",
+	"keywords": ["thanks", "m2e", "mysql", "express", "rest", "webservice", "database"],
+	"author": "",
+	"license": "WTFPL",
+	"script": {
+		"start": "node start.js",
+		"test": "mocha --sort test/**/*.test.js",
+		"cover": "nyc --reporter=html mocha --sort test/*.test.js",
+		"clean": "rimraf ./coverage ./.nyc_output",
+		"docs": "javadoc --input 'src/**/*.js' --output README.api.md --format markdown"
+	},
+	"dependencies": {
+		"express": "^4.17.1",
+		"squel": "^5.13.0",
+		"mysql2": "^2.1.0"
+	},
+	"devDependencies": {
+		"chai": "^4.2.0",
+		"javadoc": "^2.0.0",
+		"rimraf": "^3.0.2",
+		"mocha": "^7.0.1",
+		"nyc": "^15.0.0",
+		"winston": "^3.2.1"
+	}
+}

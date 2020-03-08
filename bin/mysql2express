@@ -1,0 +1,71 @@
+#!/usr/bin/env node
+
+const path = require("path");
+const yargs = require("yargs");
+const args = yargs
+	.version(require(__dirname + "/../package.json").version)
+	.option("user", {
+		type: "string",
+		alias: "u",
+		default: "test",
+		describe: "User of the MySQL DB.",
+		help: "help"
+	})
+	.option("password", {
+		type: "string",
+		alias: "p",
+		default: "test",
+		describe: "Password of the user.",
+		help: "help"
+	})
+	.option("database", {
+		type: "string",
+		alias: "d",
+		default: "test",
+		describe: "Name of the MySQL DB.",
+		help: "help"
+	})
+	.option("host", {
+		type: "string",
+		alias: "h",
+		default: "localhost",
+		describe: "IP of the MySQL DB.",
+		help: "help"
+	})
+	.option("port", {
+		type: "number",
+		alias: "r",
+		default: 3306,
+		describe: "Port of the MySQL DB.",
+		help: "help"
+	})
+	.option("output", {
+		type: "string",
+		alias: "o",
+		default:  path.resolve(process.cwd(), "mysql2express-output"),
+		describe: "Directory to dump sources to.",
+		help: "help"
+	})
+	.option("extensions", {
+		type: "string",
+		alias: "x",
+		default: null,
+		describe: "Path to extensions",
+		help: "help"
+	})
+	.argv;
+
+
+const {host, port, user, password, database, output, extensions} = args;
+const mysql2express = require(__dirname + "/../src/index.js");
+const credentials = {host, port, user, password, database};
+const options = {outputPath: path.resolve(output)};
+const _extensions = typeof extensions === "string" ? require(extensions) : {};
+
+mysql2express(credentials, options, _extensions)
+	.then(data => {
+		// @NOTHING
+	})
+	.catch(error => {
+		console.log("[cmd.mysql2express] ERROR ARISED!", error);
+	});

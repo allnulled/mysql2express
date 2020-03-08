@@ -1,0 +1,15 @@
+const Model = require(__dirname + "/Model.js");
+
+class <%-Model%>Base extends Model {
+
+	static get MODEL_INFO() {
+		return <%-JSON.stringify(modelInfo, null, 4).split(require("os").EOL).join(require("os").EOL + "        ")%>;
+	}
+
+	static get MODEL_ATTRIBUTES() {
+		return <%-JSON.stringify(modelAttributes, null, 4).split(require("os").EOL).join(require("os").EOL + "        ")%>
+	}
+
+}
+
+module.exports = <%-Model%>Base;

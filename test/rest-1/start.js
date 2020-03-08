@@ -1,0 +1,1 @@
+module.exports = require(__dirname + "/load.js").runner.onStart();
